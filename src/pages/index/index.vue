@@ -1,12 +1,17 @@
 <template>
-  <div>
-    <div>
-      测试云函数
-      <button>添加函数</button>
-      <button>删除函数</button>
-      <button>修改函数</button>
-      <button>查看函数</button>
-    </div>
+  <div class="contain">
+      <img src="/static/images/girl1.jpg">
+      <img src="/static/images/girl2.jpg">
+      <img src="/static/images/girl3.jpg">
+      <div class="middle-contain">
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+      </div>
+      <i-button>这是一个按钮</i-button>
   </div>
 </template>
 
@@ -17,6 +22,7 @@ export default {
   data () {
     return {
       motto: 'Hello miniprograme',
+      list:[],
       userInfo: {
         nickName: 'mpvue',
         avatarUrl: 'http://mpvue.com/assets/logo.png'
@@ -25,10 +31,8 @@ export default {
   },
 mounted() {
   // env是你云开发的环境id。
-  console.log('666')
+  let that = this
   const db = wx.cloud.database()
-  console.log(db)
-  console.log(db.collection('list'))
   db.collection('list').add({
     // data 字段表示需新增的 JSON 数据
     data: {
@@ -48,6 +52,7 @@ mounted() {
       success(res) {
         // res.data 包含该记录的数据
         console.log(res.data)
+        that.list = res.data
       }
     })
   },
@@ -65,55 +70,27 @@ mounted() {
 }
 </script>
 
-<style scoped>
-.userinfo {
+<style scoped lang="less">
+.contain{
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-.all{
-  width:7.5rem;
-  height:1rem;
-  background-color:blue;
-}
-.all:after{
-  display:block;
-  content:'';
-  clear:both;
-}
-.left{
-  float:left;
-  width:3rem;
-  height:1rem;
-  background-color:red;
-}
-
-.right{
-  float:left;
-  width:4.5rem;
-  height:1rem;
-  background-color:green;
+  width: 100%;
+  img{
+    width: 750rpx;
+    height: 200rpx;
+  }
+  .middle-contain{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 750rpx;
+    height: auto;
+    span{
+      width: 300rpx;
+      height: 300rpx;
+      background: red;
+      margin: 20rpx;
+    }
+  }
 }
 </style>
