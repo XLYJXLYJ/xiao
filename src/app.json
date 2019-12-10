@@ -2,12 +2,13 @@
   "pages": [
     "pages/index/main",
     "pages/logs/main",
+    "pages/video/main",
     "pages/counter/main"
   ],
   "window": {
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "江小酒的主页",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -28,7 +29,7 @@
       "selectedIconPath": "static/tabs/orders-active.png"
     }, {
       "text": "一",
-      "pagePath": "pages/logs/main",
+      "pagePath": "pages/video/main",
       "iconPath": "static/tabs/orders.png",
       "selectedIconPath": "static/tabs/orders-active.png"
     }, {
@@ -50,7 +51,7 @@
       "activeIcon": "static/tabs/orders-active.png"
     }, {
       "name": "一",
-      "pagePath": "pages/logs/main",
+      "pagePath": "pages/video/main",
       "icon": "static/tabs/orders.png",
       "activeIcon": "static/tabs/orders-active.png"
     }, {

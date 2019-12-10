@@ -11,7 +11,7 @@
 	"compileType": "miniprogram",
 	"appid": "wx9da7b7d41029b825",
 	"projectname": "my-project",
-	"cloudfunctionRoot": "static/functions/",
+	"cloudfunctionRoot": "static/cloudfunctions/",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
