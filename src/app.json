@@ -1,21 +1,22 @@
 {
   "pages": [
     "pages/index/main",
-    "pages/logs/main",
+    "pages/email/main",
     "pages/video/main",
-    "pages/counter/main"
+    "pages/edit/main"
   ],
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "江小酒的主页",
-    "navigationBarTextStyle": "black"
+    "navigationBarTitleText": "江小酒",
+    "navigationBarTextStyle": "black",
+    "navigationStyle":"custom"
   },
   "tabBar": {
-    "color": "#999",
-    "backgroundColor": "#fafafa",
+    "color": "#fff",
+    "backgroundColor": "#000",
     "selectedColor": "#333",
-    "borderStyle": "white",
+    "borderStyle": "black",
 
     "list": [{
       "text": "一",
@@ -24,19 +25,19 @@
       "selectedIconPath": "static/tabs/home-active.png"
     }, {
       "text": "生",
-      "pagePath": "pages/logs/main",
-      "iconPath": "static/tabs/orders.png",
-      "selectedIconPath": "static/tabs/orders-active.png"
+      "pagePath": "pages/email/main",
+      "iconPath": "static/tabs/email.png",
+      "selectedIconPath": "static/tabs/email-active.png"
     }, {
       "text": "一",
       "pagePath": "pages/video/main",
-      "iconPath": "static/tabs/orders.png",
-      "selectedIconPath": "static/tabs/orders-active.png"
+      "iconPath": "static/tabs/video.png",
+      "selectedIconPath": "static/tabs/video-active.png"
     }, {
       "text": "世",
-      "pagePath": "pages/logs/main",
-      "iconPath": "static/tabs/orders.png",
-      "selectedIconPath": "static/tabs/orders-active.png"
+      "pagePath": "pages/edit/main",
+      "iconPath": "static/tabs/edit.png",
+      "selectedIconPath": "static/tabs/edit-active.png"
     }],
 
     "items": [{
@@ -46,7 +47,7 @@
       "activeIcon": "static/tabs/home-active.png"
     }, {
       "name": "生",
-      "pagePath": "pages/logs/main",
+      "pagePath": "pages/email/main",
       "icon": "static/tabs/orders.png",
       "activeIcon": "static/tabs/orders-active.png"
     }, {
@@ -56,7 +57,7 @@
       "activeIcon": "static/tabs/orders-active.png"
     }, {
       "name": "世",
-      "pagePath": "pages/logs/main",
+      "pagePath": "pages/edit/main",
       "icon": "static/tabs/orders.png",
       "activeIcon": "static/tabs/orders-active.png"
     }],
