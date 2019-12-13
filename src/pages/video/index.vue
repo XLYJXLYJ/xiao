@@ -20,7 +20,7 @@
             <p>{{item.user.nickName}}</p>
           </div>
         </scroll-view>
-        <!-- <p class="count">已收到{{userList.length}}位好友送来的祝福</p> -->
+        <p class="count">已收到{{userList.length}}位好友送来的祝福</p>
         <div class="bottom">
           <button class="left" lang="zh_CN" open-type="getUserInfo" @getuserinfo="sendGreet">点赞</button>
           <button class="right" open-type="share">分享</button> 
@@ -36,14 +36,20 @@ export default {
       videoData:[],
       src:'',
       indexSrc:0,
-      sayList:[]
+      sayList:[],
+      userList: [],
+      openId: '',
+      userInfo: ''
     }
   },
-created(){
-  let that = this
-},
-mounted() {
-  let that = this
+  created(){
+    let that = this
+  },
+  mounted() {
+    let that = this
+
+    that.getUserList()
+
     wx.cloud.init({
       traceUser: true
     })
@@ -72,6 +78,67 @@ mounted() {
 
   },
   methods: {
+    sendGreet (e) {
+      const that = this
+      if (e.target.errMsg === 'getUserInfo:ok') {
+        wx.getUserInfo({
+          success: function (res) {
+            that.userInfo = res.userInfo
+            that.getOpenId()
+          }
+        })
+      }
+    },
+
+    addUser () {
+      const that = this
+      const db = wx.cloud.database()
+      const user = db.collection('user')
+      user.add({
+        data: {
+          user: that.userInfo
+        }
+      }).then(res => {
+        that.getUserList()
+      })
+    },
+
+    getOpenId () {
+      const that = this
+      wx.cloud.callFunction({
+        name: 'user',
+        data: {}
+      }).then(res => {
+        that.openId = res.result.openid
+        that.getIsExist()
+      })
+    },
+
+    getIsExist () {
+      const that = this
+      const db = wx.cloud.database()
+      const user = db.collection('user')
+      user.where({
+        _openid: that.openId
+      }).get().then(res => {
+        if (res.data.length === 0) {
+          that.addUser()
+        } else {
+          tools.showToast('您已经送过祝福了~')
+        }
+      })
+    },
+
+    getUserList () {
+      const that = this
+      wx.cloud.callFunction({
+        name: 'userList',
+        data: {}
+      }).then(res => {
+        that.userList = res.result.data.reverse()
+      })
+    },
+
     goBack(){
       if(this.indexSrc == -1 || this.indexSrc == 0){
         this.indexSrc = this.videoData.length - 1
