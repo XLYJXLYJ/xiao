@@ -8,7 +8,7 @@
         </div>
 
         <div class="sent">
-          <input type="text">
+          <input type="text" v-model="whatSay">
           <button class="lovebutton" @click="sentLove()">送上祝福</button>
         </div>
       </div>
@@ -39,7 +39,8 @@ export default {
       sayList:[],
       userList: [],
       openId: '',
-      userInfo: ''
+      userInfo: '',
+      whatSay:''
     }
   },
   created(){
@@ -78,11 +79,32 @@ export default {
 
   },
   methods: {
+    sentLove(){
+      const that = this
+      that.sayList.push({
+        text: that.whatSay,
+        color:'#fff',
+        time:10
+      })
+      const db = wx.cloud.database()
+      const user = db.collection('sayList')
+      user.add({
+        data: {
+          text: that.whatSay,
+          color:'#fff',
+          time:3
+        }
+      }).then(res => {
+        // that.getUserList()
+      })
+    },
     sendGreet (e) {
       const that = this
+      console.log(e)
       if (e.target.errMsg === 'getUserInfo:ok') {
         wx.getUserInfo({
           success: function (res) {
+            console.log(res)
             that.userInfo = res.userInfo
             that.getOpenId()
           }
@@ -109,6 +131,7 @@ export default {
         name: 'user',
         data: {}
       }).then(res => {
+        console.log(res)
         that.openId = res.result.openid
         that.getIsExist()
       })
@@ -194,7 +217,7 @@ export default {
       margin-top: 10rpx;
       position: relative;
       input{
-        width: 500rpx;
+        width: 460rpx;
         height: 70rpx;
         box-shadow: 0 0 10px #000;
         display:inline-block;
@@ -202,6 +225,7 @@ export default {
         left: 20rpx;
         top: 0;
         border-radius: 20rpx;
+        padding-left: 30rpx;
       }
       button{
         width: 200rpx;
