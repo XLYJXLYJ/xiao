@@ -3,7 +3,11 @@
     "pages/index/main",
     "pages/email/main",
     "pages/video/main",
-    "pages/edit/main"
+    "pages/edit/main",
+    "pages/edit/cday/main",
+    "pages/edit/want/main",
+    "pages/edit/we/main",
+    "pages/edit/future/main"
   ],
   "window": {
     "backgroundTextStyle": "dark",

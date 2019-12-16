@@ -1,7 +1,7 @@
 <template>
   <div class="contain">
       <div class="middle-contain">
-        <video :src="src" enable-danmu :danmu-list="sayList"></video>
+        <video :src="src" enable-danmu :danmu-list="sayList" danmu-btn :show-center-play-btn='false' autoplay></video>
         <div class="button">
           <img @click="goBack()" src="/static/images/go.png" alt="">
           <img @click="goNext()" src="/static/images/back.png" alt="">
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import tools from '@/common/js/h_tools'
 export default {
   data () {
     return {
@@ -43,14 +44,9 @@ export default {
       whatSay:''
     }
   },
-  created(){
-    let that = this
-  },
   mounted() {
     let that = this
-
     that.getUserList()
-
     wx.cloud.init({
       traceUser: true
     })
@@ -61,17 +57,13 @@ export default {
         that.src = that.videoData[0].src
       }
     });
-
     wx.cloud.callFunction({
       name: 'say',
       complete: res => {
-        console.log(res)
         let arr = res.result.data
         for(let i=0;i<arr.length;i++){
-          console.log(arr[i])
           that.sayList.push(arr[i])
         }
-        console.log(that.sayList)
       }
     });
   },
@@ -100,18 +92,15 @@ export default {
     },
     sendGreet (e) {
       const that = this
-      console.log(e)
       if (e.target.errMsg === 'getUserInfo:ok') {
         wx.getUserInfo({
           success: function (res) {
-            console.log(res)
             that.userInfo = res.userInfo
             that.getOpenId()
           }
         })
       }
     },
-
     addUser () {
       const that = this
       const db = wx.cloud.database()
@@ -124,19 +113,16 @@ export default {
         that.getUserList()
       })
     },
-
     getOpenId () {
       const that = this
       wx.cloud.callFunction({
         name: 'user',
         data: {}
       }).then(res => {
-        console.log(res)
         that.openId = res.result.openid
         that.getIsExist()
       })
     },
-
     getIsExist () {
       const that = this
       const db = wx.cloud.database()
@@ -151,7 +137,6 @@ export default {
         }
       })
     },
-
     getUserList () {
       const that = this
       wx.cloud.callFunction({
@@ -161,21 +146,24 @@ export default {
         that.userList = res.result.data.reverse()
       })
     },
-
     goBack(){
       if(this.indexSrc == -1 || this.indexSrc == 0){
         this.indexSrc = this.videoData.length - 1
       }
+      if(this.indexSrc == this.videoData.length){
+        this.indexSrc = this.indexSrc - 2      }
+      console.log(this.indexSrc)
       this.src = this.videoData[this.indexSrc].src
       this.indexSrc = this.indexSrc - 1
     },
     goNext(){
+      console.log(this.indexSrc)
       if(this.indexSrc == this.videoData.length){
         this.indexSrc = 0
       }
-      if(this.indexSrc == 0){
-        this.indexSrc = this.indexSrc + 1
-      }
+      // if(this.indexSrc == 0){
+      //   this.indexSrc = this.indexSrc + 1
+      // }
       this.src = this.videoData[this.indexSrc].src
       this.indexSrc = this.indexSrc + 1
     }
@@ -213,7 +201,6 @@ export default {
     .sent{
       width: 750rpx;
       height: 100rpx;
-      // margin-bottom: 50rpx;
       margin-top: 10rpx;
       position: relative;
       input{
@@ -236,19 +223,9 @@ export default {
         color: #fff;
         position: absolute;
         right: 20rpx;
-        // top: -48rpx;
         font-size: 28rpx;
       }
     }
-    // .lovebutton{
-    //   width: 400rpx;
-    //   height: auto;
-    //   border-radius: 10rpx;
-    //   box-shadow: 0 0 10px #000;
-    //   margin-top: 50rpx;
-    //   background: #000;
-    //   color: #fff;
-    // }
   }
 
   .greet{
